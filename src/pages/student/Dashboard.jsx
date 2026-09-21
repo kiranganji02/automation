@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   FaChartLine, FaFileAlt, FaBriefcase, FaExchangeAlt, FaCalendarAlt, FaUserTie, 
   FaTachometerAlt, FaRocket, FaLightbulb, FaArrowRight, FaCheckCircle, FaClock, 
-  FaCode, FaBrain, FaComments, FaTrophy, FaStar, FaChartBar, FaGraduationCap
+  FaCode, FaBrain, FaComments, FaTrophy, FaStar, FaChartBar, FaGraduationCap, FaCalculator
 } from 'react-icons/fa';
 import { Doughnut, Bar, Radar, Line } from 'react-chartjs-2';
 import { 
@@ -95,7 +95,10 @@ const Dashboard = () => {
       if (jdAnalysis || jdData) modulesCompleted++;
       if (skillGap) modulesCompleted++;
       if (prepPlan || prepProgress) modulesCompleted++;
-      if (interviewHistory.length > 0) modulesCompleted++;
+      if (interviewHistory.length > 0 || localStorage.getItem('ipc_interview_simulator_history')) modulesCompleted++;
+      if (localStorage.getItem('ipc_coding_assessment_history')) modulesCompleted++;
+      if (localStorage.getItem('ipc_aptitude_history')) modulesCompleted++;
+      if (localStorage.getItem('ipc_career_recommendations')) modulesCompleted++;
 
       // Category scores for bar chart
       const categoryScores = {
@@ -244,7 +247,7 @@ const Dashboard = () => {
   const moduleCompletionData = {
     labels: ['Completed', 'Remaining'],
     datasets: [{
-      data: [data.modulesCompleted, 6 - data.modulesCompleted],
+      data: [data.modulesCompleted, Math.max(0, 10 - data.modulesCompleted)],
       backgroundColor: ['#22c55e', '#f1f5f9'],
       borderWidth: 0,
       cutout: '70%',
@@ -253,10 +256,14 @@ const Dashboard = () => {
 
   const modules = [
     { name: 'Resume Analyzer', desc: 'Upload & analyze your resume for ATS compatibility', icon: <FaFileAlt />, path: '/student/resume-analyzer', color: 'bg-blue-50 text-blue-600', check: 'ipc_resume_analysis' },
+    { name: 'Career Recommendation', desc: 'AI-driven job role recommendations based on your skills', icon: <FaBriefcase />, path: '/student/career-recommendation', color: 'bg-cyan-50 text-cyan-600', check: 'ipc_career_recommendations' },
     { name: 'Job Analyzer', desc: 'Extract requirements from job descriptions', icon: <FaBriefcase />, path: '/student/job-analyzer', color: 'bg-purple-50 text-purple-600', check: 'ipc_jd_analysis' },
     { name: 'Skill Gap', desc: 'Identify missing skills & get action plan', icon: <FaExchangeAlt />, path: '/student/skill-gap', color: 'bg-orange-50 text-orange-600', check: 'ipc_skill_gap' },
-    { name: 'Prep Plan', desc: 'Personalized day-wise preparation roadmap', icon: <FaCalendarAlt />, path: '/student/prep-plan', color: 'bg-emerald-50 text-emerald-600', check: 'ipc_prep_plan' },
-    { name: 'Mock Interview', desc: 'Practice with AI-powered interview simulator', icon: <FaUserTie />, path: '/student/mock-interview', color: 'bg-indigo-50 text-indigo-600', check: 'ipc_interview_history' },
+    { name: 'AI Interview Simulator', desc: 'HR, technical, behavioral & role-specific mock rounds', icon: <FaBrain />, path: '/student/interview-simulator', color: 'bg-indigo-50 text-indigo-600', check: 'ipc_interview_simulator_history' },
+    { name: 'Interview Evaluation', desc: 'Deep analytics on communication, correctness & confidence', icon: <FaChartBar />, path: '/student/interview-evaluation', color: 'bg-violet-50 text-violet-600', check: 'ipc_interview_history' },
+    { name: 'Coding Assessment', desc: 'Role-specific coding, MCQs, SQL problems & debugging', icon: <FaCode />, path: '/student/coding-assessment', color: 'bg-emerald-50 text-emerald-600', check: 'ipc_coding_assessment_history' },
+    { name: 'Aptitude Preparation', desc: 'Quantitative, logical reasoning & verbal practice', icon: <FaCalculator />, path: '/student/aptitude-prep', color: 'bg-amber-50 text-amber-600', check: 'ipc_aptitude_history' },
+    { name: 'Prep Plan', desc: 'Personalized day-wise preparation roadmap', icon: <FaCalendarAlt />, path: '/student/prep-plan', color: 'bg-teal-50 text-teal-600', check: 'ipc_prep_plan' },
     { name: 'Mock Test', desc: 'Aptitude, technical & verbal assessments', icon: <FaGraduationCap />, path: '/student/mock-test', color: 'bg-rose-50 text-rose-600', check: 'ipc_mock_test_scores' },
   ];
 

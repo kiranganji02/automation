@@ -28,6 +28,13 @@ import TrendingStreams from './pages/student/TrendingStreams';
 import CommunicationPractice from './pages/student/CommunicationPractice';
 import MockTest from './pages/student/MockTest';
 
+// New Feature Pages (Features 6-10)
+import InterviewSimulator from './pages/student/InterviewSimulator';
+import InterviewEvaluation from './pages/student/InterviewEvaluation';
+import CodingAssessment from './pages/student/CodingAssessment';
+import AptitudePrep from './pages/student/AptitudePrep';
+import CareerRecommendation from './pages/student/CareerRecommendation';
+
 // HR Pages
 import HRDashboard from './pages/hr/HRDashboard';
 
@@ -65,6 +72,13 @@ function App() {
             <Route path="trending-streams" element={<TrendingStreams />} />
             <Route path="communication-practice" element={<CommunicationPractice />} />
             <Route path="mock-test" element={<MockTest />} />
+
+            {/* New Features (6-10) */}
+            <Route path="interview-simulator" element={<InterviewSimulator />} />
+            <Route path="interview-evaluation" element={<InterviewEvaluation />} />
+            <Route path="coding-assessment" element={<CodingAssessment />} />
+            <Route path="aptitude-prep" element={<AptitudePrep />} />
+            <Route path="career-recommendation" element={<CareerRecommendation />} />
           </Route>
 
           {/* HR Routes */}

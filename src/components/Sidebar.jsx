@@ -4,7 +4,8 @@ import {
   FaHome, FaListUl, FaChartLine, FaUser, FaCode, FaFileAlt,
   FaSearch, FaYoutube, FaKeyboard, FaRobot, FaLightbulb,
   FaTrophy, FaFire, FaComments, FaClipboardCheck, FaUserTie,
-  FaRocket, FaTimes, FaGraduationCap
+  FaRocket, FaTimes, FaGraduationCap, FaBrain, FaBriefcase,
+  FaChartBar, FaCalculator
 } from 'react-icons/fa';
 
 const studentMenuItems = [
@@ -24,6 +25,13 @@ const studentMenuItems = [
   { path: '/student/communication-practice', icon: FaComments, label: 'Communication' },
   { path: '/student/mock-test', icon: FaClipboardCheck, label: 'Mock Test' },
   { path: '/student/mock-interview', icon: FaUserTie, label: 'Mock Interview' },
+  
+  // New Features (6-10)
+  { path: '/student/interview-simulator', icon: FaBrain, label: 'AI Interview Simulator' },
+  { path: '/student/interview-evaluation', icon: FaChartBar, label: 'Interview Evaluation' },
+  { path: '/student/coding-assessment', icon: FaCode, label: 'Coding Assessment' },
+  { path: '/student/aptitude-prep', icon: FaCalculator, label: 'Aptitude Prep' },
+  { path: '/student/career-recommendation', icon: FaBriefcase, label: 'Career Recommendation' },
 ];
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
