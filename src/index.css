@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Global styles */
+body {
+  @apply bg-dark-50 text-dark-800;
+  margin: 0;
+  padding: 0;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent;
+}
+
+/* Glass effect */
+.glass {
+  @apply bg-white/80 backdrop-blur-lg border border-white/20;
+}
+
+/* Card hover effect */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Sidebar active state */
+.sidebar-active {
+  @apply bg-primary-50 text-primary-700 border-r-4 border-primary-600 font-semibold;
+}
+
+/* Code editor styling */
+.code-editor {
+  @apply font-mono text-sm bg-dark-900 text-green-400 p-4 rounded-lg;
+  tab-size: 2;
+}
+
+/* Chat message styling */
+.chat-bubble-user {
+  @apply bg-primary-500 text-white rounded-2xl rounded-br-md px-4 py-2;
+}
+
+.chat-bubble-bot {
+  @apply bg-dark-100 text-dark-800 rounded-2xl rounded-bl-md px-4 py-2;
+}
+
+/* Typing cursor animation */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.typing-cursor {
+  animation: blink 1s infinite;
+}
+
+/* Progress bar animation */
+@keyframes progressFill {
+  from { width: 0%; }
+}
+
+.progress-animate {
+  animation: progressFill 1s ease-out;
+}
+
+/* Toast customization */
+.Toastify__toast {
+  @apply rounded-xl font-sans;
+}
