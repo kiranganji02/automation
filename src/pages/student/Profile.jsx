@@ -11,6 +11,7 @@ import {
 } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
+import { saveUserProfileToDb, getUserProfileFromDb } from '../../firebase/db';
 
 // ── Default profile structure ───────────────────────────────────────
 const DEFAULT_PROFILE = {
@@ -219,25 +220,39 @@ const Profile = () => {
   const [profile, setProfile] = useState(DEFAULT_PROFILE);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('ipc_profile');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setProfile(prev => ({ ...prev, ...parsed }));
-      } else if (user) {
-        setProfile(prev => ({ ...prev, name: user.name || '', email: user.email || '' }));
-      }
-    } catch (e) { console.error(e); }
+    const loadProfile = async () => {
+      try {
+        const saved = localStorage.getItem('ipc_profile');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setProfile(prev => ({ ...prev, ...parsed }));
+        } else if (user) {
+          setProfile(prev => ({ ...prev, name: user.name || '', email: user.email || '' }));
+          const remote = await getUserProfileFromDb(user.id || user.email);
+          if (remote) {
+            setProfile(prev => ({ ...prev, ...remote }));
+          }
+        }
+      } catch (e) { console.error(e); }
+    };
+    loadProfile();
   }, [user]);
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     localStorage.setItem('ipc_profile', JSON.stringify(profile));
     if (login && user) login({ ...user, name: profile.name, email: profile.email });
-    toast.success('Profile saved successfully! ✅');
+    
+    const uid = user?.id || user?.email || profile.email || 'student_profile';
+    const dbRes = await saveUserProfileToDb(uid, profile);
+    if (dbRes?.success && !dbRes?.localOnly) {
+      toast.success('Profile saved & synced to Firebase! 🔥');
+    } else {
+      toast.success('Profile saved successfully! ✅');
+    }
   };
 
   // Dynamic array field helpers

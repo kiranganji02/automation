@@ -8,6 +8,7 @@ import {
 import { toast } from 'react-toastify';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { saveResumeAnalysisToDb, getActiveUserId } from '../../firebase/db';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -624,6 +625,14 @@ export default function ResumeAnalyzer() {
           certifications: hasCertifications ? 'Detected' : '',
           text: text
         }));
+
+        // Dual-write to Firebase Cloud Firestore
+        const activeUid = getActiveUserId();
+        saveResumeAnalysisToDb(activeUid, result, text).then(res => {
+          if (res?.success && !res?.localOnly) {
+            console.log('Synced resume analysis to Firebase Firestore');
+          }
+        }).catch(e => console.warn('Firebase resume sync:', e));
 
         setIsAnalyzing(false);
         toast.success('Resume analysis complete! 🎉');

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { FaBell, FaSignOutAlt, FaUser, FaChevronDown, FaFileAlt, FaBriefcase, FaExchangeAlt, FaCalendarAlt, FaUserTie, FaTachometerAlt, FaRocket } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import FirebaseStatusModal from './FirebaseStatusModal';
 
 const navItems = [
   { path: '/student/dashboard', label: 'Dashboard', icon: FaTachometerAlt },
@@ -82,8 +83,11 @@ const Header = () => {
           })}
         </nav>
 
-        {/* Right: Notifications and Profile */}
+        {/* Right: Notifications, Database & Profile */}
         <div className="flex items-center gap-2">
+          {/* Firebase Database Status & Config */}
+          <FirebaseStatusModal />
+
           {/* Mobile nav toggle */}
           <button
             onClick={() => setShowMobileNav(!showMobileNav)}

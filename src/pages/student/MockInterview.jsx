@@ -8,6 +8,7 @@ import {
 import { toast } from 'react-toastify';
 import { Doughnut, Bar, Radar } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { saveInterviewResultToDb, getActiveUserId } from '../../firebase/db';
 
 // Comprehensive Question Bank
 const QUESTION_BANK = [
@@ -462,6 +463,16 @@ export default function MockInterview() {
   const saveHistory = (newHistory) => {
     setHistory(newHistory);
     localStorage.setItem('ipc_interview_history', JSON.stringify(newHistory));
+
+    // Dual-write to Firebase Cloud Firestore
+    if (newHistory && newHistory.length > 0) {
+      const uid = getActiveUserId();
+      saveInterviewResultToDb(uid, newHistory[0]).then(res => {
+        if (res?.success && !res?.localOnly) {
+          console.log('Synced interview result to Firebase Firestore');
+        }
+      }).catch(e => console.warn('Firebase interview sync:', e));
+    }
   };
 
   // Timer logic for active interview
