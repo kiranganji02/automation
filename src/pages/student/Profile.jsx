@@ -528,7 +528,21 @@ const Profile = () => {
       <SectionCard title="Career Preferences" icon={FaRocket} iconColor="bg-violet-50 text-violet-600">
         <TextAreaField label="Career Objective" name="careerObjective" value={profile.careerObjective} onChange={handleChange} placeholder="Write a 2-3 line career objective statement..." rows={3} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <SelectField label="Target Role" name="targetRole" value={profile.targetRole} onChange={handleChange} options={['Software Developer', 'Frontend Developer', 'Backend Developer', 'Full Stack Developer', 'Data Analyst', 'Data Scientist', 'ML Engineer', 'DevOps Engineer', 'QA Engineer', 'Mobile Developer', 'Cloud Engineer', 'Network Engineer', 'Cybersecurity Analyst', 'Product Manager', 'UI/UX Designer', 'Other']} />
+          <SelectField label="Target Role" name="targetRole" value={profile.targetRole} onChange={handleChange} options={[
+            // CS & IT
+            'Software Developer', 'Full Stack Developer', 'Frontend Developer', 'Backend Developer', 'DevOps Engineer', 'Cloud Engineer', 'QA Engineer',
+            // AIML
+            'AI / ML Engineer', 'Data Scientist', 'Data Analyst', 'Computer Vision Engineer',
+            // Civil
+            'Structural Design Engineer', 'Civil Site Engineer', 'BIM Engineer', 'Quantity Surveying Engineer',
+            // Mechanical
+            'Mechanical Design Engineer', 'CAD / CAM Engineer', 'Thermal & HVAC Engineer', 'Production Engineer',
+            // ECE
+            'Embedded Systems Engineer', 'VLSI Design Engineer', 'IoT & Firmware Engineer',
+            // EEE
+            'Electrical Systems Engineer', 'Industrial Automation Engineer', 'Power Systems Engineer',
+            'Other'
+          ]} />
           <InputField label="Preferred Locations" name="preferredLocations" value={profile.preferredLocations} onChange={handleChange} placeholder="e.g. Bangalore, Hyderabad, Remote" icon={FaMapMarkerAlt} />
           <InputField label="Expected CTC (LPA)" name="expectedCTC" value={profile.expectedCTC} onChange={handleChange} placeholder="e.g. 6-10 LPA" />
           <SelectField label="Notice Period" name="noticePeriod" value={profile.noticePeriod} onChange={handleChange} options={['Immediate', '15 Days', '1 Month', '2 Months', '3 Months']} />

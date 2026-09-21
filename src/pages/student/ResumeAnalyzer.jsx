@@ -339,27 +339,9 @@ export default function ResumeAnalyzer() {
       const saved = localStorage.getItem('ipc_resume_analysis');
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Re-attach icon references (can't serialize functions)
-        if (parsed && parsed.sections) {
-          parsed.sections = parsed.sections.map(s => ({
-            ...s,
-            quality: {
-              ...s.quality,
-              icon: s.quality.status === 'Strong' ? FaCheckCircle
-                : s.quality.status === 'Weak' ? FaExclamationTriangle
-                : FaTimesCircle
-            }
-          }));
+        if (parsed && typeof parsed === 'object') {
+          setAnalysisResult(parsed);
         }
-        if (parsed && parsed.feedback) {
-          parsed.feedback = parsed.feedback.map(f => ({
-            ...f,
-            icon: f.priority === 'High' ? FaExclamationTriangle
-              : f.priority === 'Medium' ? FaLightbulb
-              : FaStar
-          }));
-        }
-        setAnalysisResult(parsed);
       }
     } catch (e) {
       console.error('Failed to parse saved analysis', e);
@@ -884,17 +866,23 @@ export default function ResumeAnalyzer() {
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {analysisResult.sections.map((section, idx) => {
-                    const Icon = section.quality.icon;
+                    const status = section?.quality?.status;
                     return (
-                      <div key={idx} className={`rounded-xl p-4 border border-slate-200 flex items-start gap-3 ${section.quality.bg}`}>
-                        <Icon className={`text-xl mt-0.5 ${section.quality.color} shrink-0`} />
+                      <div key={idx} className={`rounded-xl p-4 border border-slate-200 flex items-start gap-3 ${section?.quality?.bg || 'bg-slate-50'}`}>
+                        {status === 'Strong' ? (
+                          <FaCheckCircle className="text-xl mt-0.5 text-green-500 shrink-0" />
+                        ) : status === 'Weak' ? (
+                          <FaExclamationTriangle className="text-xl mt-0.5 text-orange-500 shrink-0" />
+                        ) : (
+                          <FaTimesCircle className="text-xl mt-0.5 text-red-500 shrink-0" />
+                        )}
                         <div>
-                          <h4 className="font-bold text-slate-800 text-sm">{section.name}</h4>
+                          <h4 className="font-bold text-slate-800 text-sm">{section?.name}</h4>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${section.quality.bg} ${section.quality.color} border border-current/20`}>
-                              {section.quality.status}
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${section?.quality?.bg || 'bg-slate-100'} ${section?.quality?.color || 'text-slate-600'} border border-current/20`}>
+                              {status || 'Unknown'}
                             </span>
-                            <span className="text-xs text-slate-500">{section.quality.message}</span>
+                            <span className="text-xs text-slate-500">{section?.quality?.message}</span>
                           </div>
                         </div>
                       </div>
@@ -939,11 +927,16 @@ export default function ResumeAnalyzer() {
                 <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
                   {analysisResult.feedback.length > 0 ? (
                     analysisResult.feedback.map((item, idx) => {
-                      const Icon = item.icon;
                       const colorClass = item.priority === 'High' ? 'text-red-500' : item.priority === 'Medium' ? 'text-orange-500' : 'text-blue-500';
                       return (
                         <div key={idx} className="flex gap-2.5 items-start p-2 rounded-lg hover:bg-slate-50 transition-colors">
-                          <Icon className={`mt-0.5 ${colorClass} shrink-0 text-sm`} />
+                          {item.priority === 'High' ? (
+                            <FaExclamationTriangle className={`mt-0.5 ${colorClass} shrink-0 text-sm`} />
+                          ) : item.priority === 'Medium' ? (
+                            <FaLightbulb className={`mt-0.5 ${colorClass} shrink-0 text-sm`} />
+                          ) : (
+                            <FaStar className={`mt-0.5 ${colorClass} shrink-0 text-sm`} />
+                          )}
                           <div>
                             <p className="text-xs text-slate-700 leading-relaxed">{item.msg}</p>
                             <span className={`text-[9px] font-bold uppercase ${colorClass} mt-0.5 inline-block`}>{item.priority}</span>
