@@ -9,12 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@firebase/util": "^1.15.3",
     "chart.js": "^4.4.0",
-    "esbuild": "^0.28.2",
     "firebase": "^12.19.0",
     "framer-motion": "^10.16.0",
-    "protobufjs": "^8.8.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
@@ -28,5 +25,15 @@
     "postcss": "^8.4.32",
     "tailwindcss": "^3.3.6",
     "vite": "^5.0.0"
+  },
+  "allowScripts": {
+    "@firebase/util": true,
+    "protobufjs": true,
+    "esbuild": true,
+    "@firebase/util@1.15.3": true,
+    "protobufjs@7.6.6": true,
+    "protobufjs@8.8.0": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.21.5": true
   }
 }
